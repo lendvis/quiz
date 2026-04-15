@@ -1,4 +1,4 @@
-import { ChevronFirst, ChevronLast, Compass, FilePenLine, LogOut, ShieldCheck, Users } from "lucide-react"
+import { BarChart3, ChevronFirst, ChevronLast, Compass, FilePenLine, LogOut, ShieldCheck, Users } from "lucide-react"
 import type { FC, ReactNode } from "react"
 import { createContext, useContext, useEffect, useState } from "react"
 
@@ -57,6 +57,9 @@ export const Sidebar: FC<{ children?: ReactNode }> = ({ children }) => {
             {role === "student" && <SidebarItem icon={<Compass size={20} />} to="/todo" text="Заданные тесты" />}
             {(role === "teacher" || role === "leadership") && (
               <SidebarItem icon={<FilePenLine size={20} />} to="/editor" text="Мои тесты" />
+            )}
+            {(role === "teacher" || role === "leadership") && (
+              <SidebarItem icon={<BarChart3 size={20} />} to="/teacher-tools" text="Результаты и назначение" />
             )}
             {role === "leadership" && (
               <SidebarItem icon={<Users size={20} />} to="/management" text="Управление" />

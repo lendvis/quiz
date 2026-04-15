@@ -17,15 +17,16 @@ import { NewQuizTab } from "./components/tabs/NewQuizTab"
 import { QuizesToDoTab } from "./components/tabs/QuizesToDoTab"
 import { DialogProvider } from "./context/DialogContext"
 import { ManagementTab } from "./components/tabs/ManagementTab"
+import { TeacherToolsTab } from "./components/tabs/TeacherToolsTab"
 
   export function App() {
     return (
       <AuthContextProvider>
-        <DialogProvider>
           <BrowserRouter>
+        <DialogProvider>
             <AppContent />
-          </BrowserRouter>
         </DialogProvider>
+          </BrowserRouter>
       </AuthContextProvider>
     );
   }
@@ -60,6 +61,7 @@ import { ManagementTab } from "./components/tabs/ManagementTab"
             <Route path="/editor" element={<EditorQuizesTab />}></Route>
             <Route path="/create" element={<CreateQuizTab />}></Route>
             <Route path="/todo" element={<QuizesToDoTab/>}></Route>
+            <Route path="/teacher-tools" element={<TeacherToolsTab/>}></Route>
             <Route path="/management" element={<ManagementTab/>}></Route>
             <Route ></Route>
           </Routes>

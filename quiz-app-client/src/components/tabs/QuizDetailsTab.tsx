@@ -15,6 +15,7 @@ import { RoleGuard } from "../common/Guards/RoleGuard"
 import { useContext } from "react"
 import { AuthContext } from "../../context/AuthContext"
 import { useGetIsPassed } from "../../hooks/useGetIsPassed"
+import TeacherQuizResultsDialog from "../common/dialogs/TeacherQuizResultsDialog"
 
 export const QuizDetailsTab = () => {
   const { id } = useParams();
@@ -81,6 +82,9 @@ export const QuizDetailsTab = () => {
               </Button>
               }
               <RoleGuard roles={["teacher", "leadership"]}>
+                <Button onClick={() => openDialog(<TeacherQuizResultsDialog quizId={id as string} />)}>
+                  Результаты учеников
+                </Button>
                 <Button onClick={() => navigate(`/editor/${quizId}`)}>
                   Редактировать тест <Pencil size={18} />
                 </Button>

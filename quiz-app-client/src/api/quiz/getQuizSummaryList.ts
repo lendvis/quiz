@@ -4,6 +4,7 @@ export interface getQuizSummaryListResponce {
   
 }
 
-export function getQuizSummaryList(quizStatsId: number) {
-  return get<number[]>(`quizzes/summaryList/${quizStatsId}`, {},  { requiresAuth: true });
+export function getQuizSummaryList(quizId: number, userId?: number) {
+  const query = userId ? { userId } : {};
+  return get<number[]>(`quizzes/summaryList/${quizId}`, query,  { requiresAuth: true });
 }

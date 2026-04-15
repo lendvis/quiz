@@ -164,7 +164,18 @@ class QuizService {
             const role = await this.resolveUserRole(requester);
             const isOwner = Number(statsMeta.user_id) === Number(requester.id);
             const isAuthor = Number(statsMeta.author_id) === Number(requester.id);
-            const canRead = isOwner || role === "leadership" || (role === "teacher" && isAuthor);
+            let canRead = isOwner || role === "leadership";
+
+            if (!canRead && role === "teacher") {
+                if (isAuthor) {
+                    canRead = true;
+                } else {
+                    canRead = await quizRepository.canTeacherAccessStudent(
+                        requester.id,
+                        statsMeta.user_id
+                    );
+                }
+            }
 
             if (!canRead) {
                 throw createHttpError("Недостаточно прав для просмотра статистики", 403);
@@ -196,8 +207,36 @@ class QuizService {
         };
     }
 
-    async getQuizSummaryList(userId, quizId) {
-        return await quizRepository.getQuizSummaryList(userId, quizId);
+    async getQuizSummaryList(requester, quizId, targetUserId = null) {
+        if (!requester?.id) {
+            throw createHttpError("Пользователь не авторизован", 401);
+        }
+
+        const requestedUserId = Number(targetUserId);
+        const hasRequestedUser = Number.isInteger(requestedUserId) && requestedUserId > 0;
+        const actualTargetUserId = hasRequestedUser ? requestedUserId : Number(requester.id);
+
+        if (actualTargetUserId !== Number(requester.id)) {
+            const role = await this.resolveUserRole(requester);
+            if (role === "leadership") {
+                return await quizRepository.getQuizSummaryList(actualTargetUserId, quizId);
+            }
+
+            if (role !== "teacher") {
+                throw createHttpError("Недостаточно прав для просмотра статистики", 403);
+            }
+
+            const canAccessStudent = await quizRepository.canTeacherAccessStudent(
+                requester.id,
+                actualTargetUserId
+            );
+
+            if (!canAccessStudent) {
+                throw createHttpError("Преподаватель может просматривать только своих учеников", 403);
+            }
+        }
+
+        return await quizRepository.getQuizSummaryList(actualTargetUserId, quizId);
     }
 
     async getResult(userId, quizId) {
@@ -328,7 +367,10 @@ class QuizService {
     }
 
     async assignQuizToGroups(quizId, groupIds, user) {
-        await this.assertCanManageQuiz(quizId, user);
+        const quizMeta = await quizRepository.getQuizMeta(quizId);
+        if (!quizMeta) {
+            throw createHttpError("Тест не найден", 404);
+        }
 
         if (!Array.isArray(groupIds) || groupIds.length === 0) {
             throw createHttpError("Нет выбранных групп");
@@ -345,6 +387,10 @@ class QuizService {
         }
 
         const role = await this.resolveUserRole(user);
+        if (role !== "teacher" && role !== "leadership") {
+            throw createHttpError("Недостаточно прав для назначения теста", 403);
+        }
+
         if (role === "teacher") {
             const allowedGroupIds = new Set(await quizRepository.getTeacherGroupIds(user.id));
             const deniedGroups = normalizedGroupIds.filter((groupId) => !allowedGroupIds.has(groupId));
@@ -371,6 +417,55 @@ class QuizService {
 
         const result = await query(sql, params);
         return result.rows;
+    }
+
+    async getStudentsQuizResults(quizId, requester) {
+        const quizMeta = await quizRepository.getQuizMeta(quizId);
+        if (!quizMeta) {
+            throw createHttpError("Тест не найден", 404);
+        }
+
+        const role = await this.resolveUserRole(requester);
+        if (role !== "teacher" && role !== "leadership") {
+            throw createHttpError("Недостаточно прав для просмотра результатов", 403);
+        }
+
+        let allowedGroupIds = null;
+
+        if (role === "teacher") {
+            allowedGroupIds = await quizRepository.getTeacherGroupIds(requester.id);
+            if (!allowedGroupIds.length) {
+                return [];
+            }
+        }
+
+        const results = await quizRepository.getStudentsQuizResults(quizId, allowedGroupIds);
+
+        return results.map((attempt) => {
+            const totalQuestions = Number(attempt.totalQuestions || 0);
+            const answeredQuestions = Number(attempt.answeredQuestions || 0);
+            const correctAnswers = Number(attempt.correctAnswers || 0);
+            const passPercent = Number(attempt.passPercent || 60);
+            const wrongAnswers = Math.max(0, answeredQuestions - correctAnswers);
+            const unanswered = Math.max(0, totalQuestions - answeredQuestions);
+            const rawAccuracy = totalQuestions > 0
+                ? (correctAnswers / totalQuestions) * 100
+                : 0;
+            const accuracy = Number(rawAccuracy.toFixed(2));
+            const isPassed = totalQuestions > 0 && accuracy >= passPercent;
+
+            return {
+                ...attempt,
+                totalQuestions,
+                answeredQuestions,
+                correctAnswers,
+                wrongAnswers,
+                unanswered,
+                passPercent,
+                accuracy,
+                isPassed,
+            };
+        });
     }
 }
 

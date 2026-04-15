@@ -1,5 +1,5 @@
-import { useEffect, useState, type FC } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useContext, useEffect, useState, type FC } from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { CircleProgressBar } from "../progressBars/CircleProgressBar";
 import { Button } from "../buttons/Button";
 import { PrimaryButton } from "../buttons/PrimaryButton";
@@ -12,15 +12,32 @@ import {
 import { useGetQuizSummaryList } from "../../hooks/useGetQuizSummaryList";
 import { WithApi } from "../withApi";
 import { createQuizStats } from "../../api/quiz/createQuizStats";
+import { AuthContext } from "../../context/AuthContext";
 
 export const ResultsTab: FC = () => {
   const { quizId, quizStatsId } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const auth = useContext(AuthContext);
 
-  const getQuizSummaryListResponse = useGetQuizSummaryList(Number(quizId));
+  const selectedStudentIdRaw = searchParams.get("studentId");
+  const selectedStudentId = selectedStudentIdRaw ? Number(selectedStudentIdRaw) : null;
+  const isSelectedStudentIdValid =
+    Number.isInteger(selectedStudentId) && Number(selectedStudentId) > 0;
+  const targetStudentId = isSelectedStudentIdValid ? Number(selectedStudentId) : undefined;
+
+  const isViewingOwnResults =
+    !targetStudentId || Number(auth?.user?.id) === targetStudentId;
+  const querySuffix = targetStudentId ? `?studentId=${targetStudentId}` : "";
+
+  const getQuizSummaryListResponse = useGetQuizSummaryList(Number(quizId), targetStudentId);
   const [getQuizStatsSummaryResponse, getQuizStatsSummary] = useFetch(GetQuizStatsSummary);
 
   const onAgainButtonClicked = () => {
+    if (!isViewingOwnResults) {
+      return;
+    }
+
     createQuizStats(Number(quizId)).then((res) => navigate(`/quiz/${res.quiz_stats_id}`));
   };
 
@@ -40,10 +57,12 @@ export const ResultsTab: FC = () => {
       {(summaryList: number[]) => {
         return (
           <div className="w-full flex flex-col gap-3 pb-6">
-            <h1 className="text-slate-100 text-3xl font-bold">Результаты</h1>
+            <h1 className="text-slate-100 text-3xl font-bold">
+              {isViewingOwnResults ? "Результаты" : "Результаты ученика"}
+            </h1>
             <QuizStatsTabButtonsHolder
               onSelect={(summaryNumber) => {
-                navigate(`/results/${quizId}/${summaryNumber}`);
+                navigate(`/results/${quizId}/${summaryNumber}${querySuffix}`);
               }}
               quizStatsIds={summaryList}
               selectedId={Number(quizStatsId)}
@@ -52,6 +71,7 @@ export const ResultsTab: FC = () => {
               {(summary: QuizSummaryViewModel) => (
                 <QuizSummaryPanel
                   summary={summary}
+                  canRetake={isViewingOwnResults}
                   onAgainButtonClicked={onAgainButtonClicked}
                   onExitButtonClicked={onExitButtonClicked}
                 />
@@ -66,12 +86,14 @@ export const ResultsTab: FC = () => {
 
 interface QuizSummaryProps {
   summary: QuizSummaryViewModel;
+  canRetake: boolean;
   onAgainButtonClicked: () => void;
   onExitButtonClicked: () => void;
 }
 
 const QuizSummaryPanel: FC<QuizSummaryProps> = ({
   summary,
+  canRetake,
   onAgainButtonClicked,
   onExitButtonClicked,
 }) => {
@@ -121,10 +143,12 @@ const QuizSummaryPanel: FC<QuizSummaryProps> = ({
         </div>
 
         <div className="w-full flex flex-col md:flex-row justify-between mt-4 gap-4">
-          {summary.allowRetake ? (
+          {canRetake && summary.allowRetake ? (
             <Button onClick={onAgainButtonClicked}>Пройти тест ещё раз</Button>
-          ) : (
+          ) : canRetake ? (
             <Button inactive>Повтор отключён настройками теста</Button>
+          ) : (
+            <Button inactive>Повтор доступен только для ученика</Button>
           )}
           <PrimaryButton onClick={onExitButtonClicked}>Выйти</PrimaryButton>
         </div>

@@ -82,8 +82,21 @@ class QuizController {
     }
 
     async getQuizSummaryList(req, res) {
-        const response = await quizService.getQuizSummaryList(req.user.id, req.params.quizId);
-        res.status(200).json(response);
+        try {
+            const targetUserId = req.query.userId !== undefined
+                ? Number(req.query.userId)
+                : null;
+
+            const response = await quizService.getQuizSummaryList(
+                req.user,
+                req.params.quizId,
+                targetUserId
+            );
+            res.status(200).json(response);
+        } catch (err) {
+            console.error(err);
+            res.status(err.statusCode || 500).json({ message: err.message || "Ошибка при получении списка попыток" });
+        }
     }
 
     async getResult(req, res) {
@@ -179,6 +192,16 @@ class QuizController {
         } catch (err) {
             console.error(err)
             res.status(err.statusCode || 500).json({ message: err.message || "Ошибка при обновлении quiz" })
+        }
+    }
+
+    async getStudentQuizResults(req, res) {
+        try {
+            const results = await quizService.getStudentsQuizResults(req.params.quizId, req.user);
+            res.status(200).json(results);
+        } catch (err) {
+            console.error(err);
+            res.status(err.statusCode || 500).json({ message: err.message || "Ошибка при получении результатов учеников" });
         }
     }
 }

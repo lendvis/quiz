@@ -102,6 +102,24 @@ class QuizRepository {
         return result.rows.map((row) => Number(row.group_id));
     }
 
+    async canTeacherAccessStudent(teacherId, studentId) {
+        const result = await query(
+            `
+            SELECT 1
+            FROM public.teacher_group tg
+            JOIN public."user" u ON u.group_id = tg.group_id
+            JOIN public."role" r ON r.id = u.role_id
+            WHERE tg.teacher_id = $1
+              AND u.id = $2
+              AND r.name = 'student'
+            LIMIT 1
+            `,
+            [teacherId, studentId]
+        );
+
+        return result.rowCount > 0;
+    }
+
     async getQuestionsWithAnswers(quizId) {
         return query(
             `SELECT 
@@ -372,6 +390,77 @@ class QuizRepository {
         );
 
         return result.rows.map(row => row.id);
+    }
+
+    async getStudentsQuizResults(quizId, groupIds = null) {
+        const result = await query(
+            `
+            WITH filtered_attempts AS (
+                SELECT
+                    qs.id AS quiz_stats_id,
+                    qs.created_at,
+                    qs.user_id
+                FROM quiz_stats qs
+                JOIN public."user" u ON u.id = qs.user_id
+                JOIN public."role" r ON r.id = u.role_id
+                WHERE qs.quiz_id = $1
+                  AND r.name = 'student'
+                  AND ($2::bigint[] IS NULL OR u.group_id = ANY($2::bigint[]))
+            )
+            SELECT
+                fa.quiz_stats_id,
+                fa.created_at AS completed_at,
+                u.id AS student_id,
+                u.display_name AS student_display_name,
+                u.username AS student_username,
+                g.id AS group_id,
+                g.name AS group_name,
+                COALESCE((q.settings ->> 'passPercent')::numeric, 60) AS pass_percent,
+                (
+                    SELECT COUNT(*)::int
+                    FROM question qq
+                    WHERE qq.quiz_id = $1
+                ) AS total_questions,
+                (
+                    SELECT COUNT(*)::int
+                    FROM user_answer ua
+                    WHERE ua.quiz_stats_id = fa.quiz_stats_id
+                ) AS answered_questions,
+                (
+                    SELECT COUNT(*)::int
+                    FROM user_answer ua
+                    JOIN answer_option ao ON ao.id = ua.selected_answer_option_id
+                    WHERE ua.quiz_stats_id = fa.quiz_stats_id
+                      AND ao.is_correct = TRUE
+                ) AS correct_answers
+            FROM filtered_attempts fa
+            JOIN public."user" u ON u.id = fa.user_id
+            LEFT JOIN public."group" g ON g.id = u.group_id
+            JOIN quiz q ON q.id = $1
+            ORDER BY fa.created_at DESC, fa.quiz_stats_id DESC
+            `,
+            [quizId, groupIds]
+        );
+
+        return result.rows.map((row) => ({
+            quizStatsId: Number(row.quiz_stats_id),
+            completedAt: row.completed_at,
+            student: {
+                id: Number(row.student_id),
+                displayName: row.student_display_name,
+                username: row.student_username,
+            },
+            group: row.group_id
+                ? {
+                    id: Number(row.group_id),
+                    name: row.group_name,
+                }
+                : null,
+            totalQuestions: Number(row.total_questions || 0),
+            answeredQuestions: Number(row.answered_questions || 0),
+            correctAnswers: Number(row.correct_answers || 0),
+            passPercent: Number(row.pass_percent || 60),
+        }));
     }
 
     async getUserQuizStatuses(userId, quizIds) {
