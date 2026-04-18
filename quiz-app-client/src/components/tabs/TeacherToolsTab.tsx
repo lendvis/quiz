@@ -24,7 +24,7 @@ export const TeacherToolsTab: FC = () => {
           fallback={<h2 className="text-red-500">Раздел доступен только преподавателям и руководству</h2>}
         >
           <div className="w-full flex flex-col gap-4">
-            <header className="rounded-2xl border border-slate-700/50 bg-slate-900/60 p-5">
+            <header className="theme-panel rounded-2xl p-5">
               <h1 className="text-2xl font-bold text-slate-100">Работа с результатами и назначениями</h1>
               <p className="text-sm text-slate-300 mt-2">
                 Для каждого теста доступны две ключевые операции: просмотр результатов учеников и назначение теста
@@ -38,7 +38,7 @@ export const TeacherToolsTab: FC = () => {
                   {quizCards.map((quizCard) => (
                     <article
                       key={quizCard.id}
-                      className="rounded-2xl border border-slate-700/50 bg-slate-900/60 p-5 flex flex-col gap-4"
+                      className="theme-panel rounded-2xl p-5 flex flex-col gap-4"
                     >
                       <div>
                         <h3 className="text-xl font-semibold text-slate-100">{quizCard.name}</h3>
@@ -65,4 +65,3 @@ export const TeacherToolsTab: FC = () => {
     </Tab>
   );
 };
-

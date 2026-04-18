@@ -102,7 +102,7 @@ const QuizSummaryPanel: FC<QuizSummaryProps> = ({
   const passColor = summary.isPassed ? "text-emerald-400" : "text-rose-400";
 
   return (
-    <div className="flex flex-col xl:flex-row text-slate-100 justify-center items-center flex-1 rounded-3xl bg-slate-800/80 backdrop-blur border border-slate-700/50 p-8 gap-10 shadow-2xl">
+    <div className="theme-panel flex flex-col xl:flex-row text-slate-100 justify-center items-center flex-1 rounded-3xl p-8 gap-10">
       <CircleProgressBar
         segments={[
           {
@@ -124,9 +124,9 @@ const QuizSummaryPanel: FC<QuizSummaryProps> = ({
         <div>
           <h2 className={`text-4xl font-bold tracking-tight ${passColor}`}>{passTitle}</h2>
           <p className="text-slate-300 mt-2 text-lg">
-            Точность: <span className="font-semibold text-white">{summary.accuracy}%</span>
+            Точность: <span className="font-semibold text-slate-100">{summary.accuracy}%</span>
             <span className="mx-3 opacity-50">|</span> Порог прохождения:{" "}
-            <span className="font-semibold text-white">{summary.passPercent}%</span>
+            <span className="font-semibold text-slate-100">{summary.passPercent}%</span>
           </p>
           {summary.completedAt && (
             <p className="text-sm text-slate-500 mt-2">
@@ -164,7 +164,7 @@ interface StatProps {
 }
 
 const Stat: FC<StatProps> = ({ label, value, color }) => (
-  <div className="flex flex-col items-center rounded-2xl bg-slate-900/50 border border-slate-700/50 p-4 transition-transform hover:-translate-y-1">
+  <div className="theme-panel-muted flex flex-col items-center rounded-2xl p-4 transition-transform hover:-translate-y-1">
     <span className="mb-3 text-sm font-medium text-slate-400">{label}</span>
     <div className={`bg-gradient-to-br ${color} rounded-full h-14 w-14 flex justify-center items-center text-white text-2xl font-bold shadow-lg`}>
       {value}

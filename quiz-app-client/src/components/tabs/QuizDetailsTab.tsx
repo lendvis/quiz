@@ -93,7 +93,7 @@ export const QuizDetailsTab = () => {
             </AuthGuard>
             <div className="text-slate-200">{quiz.description}</div>
             <div className="flex flex-wrap gap-2">
-              <span className="rounded-full bg-slate-900 text-white px-3 py-1 text-sm">
+              <span className="theme-pill rounded-full px-3 py-1 text-sm">
                 Порог: {quiz.settings.passPercent}%
               </span>
               <span className="rounded-full bg-blue-100 text-blue-700 px-3 py-1 text-sm">

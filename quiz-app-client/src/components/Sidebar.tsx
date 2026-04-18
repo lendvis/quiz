@@ -5,6 +5,7 @@ import { createContext, useContext, useEffect, useState } from "react"
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { Button } from "./buttons/Button";
+import { ThemeToggleButton } from "./ThemeToggleButton";
 
 interface SidebarContextProps {
   expanded: boolean,
@@ -36,7 +37,7 @@ export const Sidebar: FC<{ children?: ReactNode }> = ({ children }) => {
 
   return (
     <aside className={`h-full relative z-20 shrink-0 transition-[width] duration-300 ${expanded ? "w-72" : "w-20"}`}>
-      <nav className="h-full flex flex-col bg-slate-900 border-r border-slate-800 shadow-xl shadow-black/30">
+      <nav className="app-sidebar h-full flex flex-col border-r">
         <div className={`p-4 flex items-center mb-2 ${expanded ? "justify-between" : "justify-center"}`}>
           <div className={`font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-cyan-400 overflow-hidden transition-all duration-300 ${expanded ? "w-32 opacity-100" : "w-0 opacity-0"}`}>
             QuizSpace
@@ -67,6 +68,9 @@ export const Sidebar: FC<{ children?: ReactNode }> = ({ children }) => {
             {children}
           </ul>
         </SidebarContext.Provider>
+        <div className={expanded ? "px-4 pt-2" : "px-2 pt-2 flex justify-center"}>
+          <ThemeToggleButton compact={!expanded} className={expanded ? "w-full justify-between" : ""} />
+        </div>
         {
           auth?.isAuthorized ? (
             <div className={`border-t border-slate-800 flex p-4 mt-2 bg-slate-900/50`}>

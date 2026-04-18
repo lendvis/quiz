@@ -124,10 +124,10 @@ export const QuizCardPanel: FC<QuizCardPanelProps> = ({
   return (
     <ServerBackground
       imageId={`quiz/${quizId}`}
-      className="group relative h-48 w-80 overflow-hidden rounded-2xl bg-slate-900 shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
+      className="quiz-card-surface group relative h-48 w-80 overflow-hidden rounded-2xl transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
     >
       <Link className="flex h-full w-full flex-col justify-between" to={href}>
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/40 to-transparent transition-opacity duration-500 group-hover:from-indigo-950/90 group-hover:via-indigo-900/40" />
+        <div className="quiz-card-overlay absolute inset-0" />
 
         <div className="relative z-10 flex h-full flex-col justify-between p-5">
           <div className="flex justify-between items-start gap-2">
@@ -140,13 +140,13 @@ export const QuizCardPanel: FC<QuizCardPanelProps> = ({
                 </span>
               )}
             </div>
-            <span className="rounded-full bg-white/10 border border-white/20 px-3 py-1 text-xs font-medium text-slate-200 backdrop-blur-md shadow-sm">
+            <span className="theme-card-chip rounded-full px-3 py-1 text-xs font-medium shadow-sm">
               {questionCount} вопросов
             </span>
           </div>
 
           <div>
-            <h3 className="text-xl font-bold leading-tight text-white line-clamp-2 mb-2 group-hover:text-indigo-200 transition-colors duration-300">
+            <h3 className="theme-card-title text-xl font-bold leading-tight line-clamp-2 mb-2 group-hover:text-indigo-200 transition-colors duration-300">
               {name}
             </h3>
             

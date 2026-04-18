@@ -39,10 +39,10 @@ import { TeacherToolsTab } from "./components/tabs/TeacherToolsTab"
   location.pathname.startsWith("/login");
 
     return (
-      <div className="flex h-full w-full bg-slate-900 overflow-hidden text-slate-100 font-sans">
+      <div className="app-shell flex h-full w-full overflow-hidden font-sans">
         {!hideSidebar && <Sidebar />}
 
-        <main className="flex-1 overflow-auto bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative">
+        <main className="app-main flex-1 overflow-auto relative">
           <Routes>
             <Route path="/" element={<QuizesTab/>} />
             <Route path="/quizes" element={<QuizesTab />} />

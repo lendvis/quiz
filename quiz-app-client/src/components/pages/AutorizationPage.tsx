@@ -4,6 +4,7 @@ import { Button } from "../buttons/Button";
 import { Loadable } from "../common/Loadable";
 import { AuthInput } from "../../features/auth/components/AuthInput";
 import type { ApiError } from "../../api/api-error";
+import { ThemeToggleButton } from "../ThemeToggleButton";
 
 export type FieldOption = {
   label: string;
@@ -62,12 +63,13 @@ export const AuthorizationPage = <T extends Record<string, any>>({
   };
 
   return (
-    <div className="h-full w-full flex items-stretch flex-row bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 relative">
+    <div className="auth-shell h-full w-full flex items-stretch flex-row relative">
+      <ThemeToggleButton compact className="theme-toggle--floating" />
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay pointer-events-none" />
-      <div className="hidden lg:flex flex-1 items-center justify-center p-10 text-white relative z-10">
+      <div className="theme-text-primary hidden lg:flex flex-1 items-center justify-center p-10 relative z-10">
         <div className="max-w-md space-y-4">
           <h2 className="text-4xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 to-cyan-300">Платформа тестирования</h2>
-          <p className="text-indigo-100/80 text-lg leading-relaxed">
+          <p className="theme-text-secondary text-lg leading-relaxed">
             Создавайте курсы, назначайте тесты группам и отслеживайте результат с прозрачной аналитикой.
           </p>
         </div>
