@@ -1,14 +1,13 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: quiz-app-postgres
     restart: unless-stopped
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-quiz_app}
       POSTGRES_USER: ${POSTGRES_USER:-quizapp}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-quizapp_dev_password}
     ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+      - "${POSTGRES_PORT:-55432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
@@ -25,7 +24,6 @@ services:
     build:
       context: ./quiz-app-server
       dockerfile: Dockerfile
-    container_name: quiz-app-backend
     restart: unless-stopped
     environment:
       NODE_ENV: production
@@ -34,12 +32,12 @@ services:
       SECRET: ${APP_SECRET:-change-me-in-production}
       LEADERSHIP_REGISTRATION_CODE: ${LEADERSHIP_REGISTRATION_CODE:-lead-123}
       UPLOAD_DIR: /app/uploads
-      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:8080}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:8088}
       RATE_LIMIT_WINDOW_MS: ${RATE_LIMIT_WINDOW_MS:-900000}
       RATE_LIMIT_MAX: ${RATE_LIMIT_MAX:-20}
       MAX_UPLOAD_SIZE_MB: ${MAX_UPLOAD_SIZE_MB:-5}
     ports:
-      - "${BACKEND_PORT:-5001}:5000"
+      - "${BACKEND_PORT:-5051}:5000"
     volumes:
       - backend_uploads:/app/uploads
     depends_on:
@@ -60,10 +58,9 @@ services:
       dockerfile: Dockerfile
       args:
         VITE_API_URL: ${VITE_API_URL:-}
-    container_name: quiz-app-frontend
     restart: unless-stopped
     ports:
-      - "${FRONTEND_PORT:-8080}:80"
+      - "${FRONTEND_PORT:-8088}:80"
     depends_on:
       backend:
         condition: service_healthy
