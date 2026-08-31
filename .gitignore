@@ -5,3 +5,7 @@
 **/node_modules
 **/dist
 **/.vite
+
+# runtime uploads live in the docker volume backend_uploads
+quiz-app-server/uploads/
+quiz-app-server/src/uploads/
