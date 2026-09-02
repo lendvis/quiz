@@ -19,6 +19,15 @@ class QuizController {
     }
 
 
+    async getAnalytics(req, res) {
+        try {
+            const analytics = await quizService.getQuizAnalytics(req.user, req.params.quizId);
+            res.json(analytics);
+        } catch (err) {
+            res.status(err.statusCode || 500).json({ message: err.message || "Не удалось собрать аналитику" });
+        }
+    }
+
     async submitResult(req, res) {
         await quizService.submitResult(
             req.user.id,

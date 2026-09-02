@@ -17,12 +17,13 @@ import { NewQuizTab } from "./components/tabs/NewQuizTab"
 import { QuizesToDoTab } from "./components/tabs/QuizesToDoTab"
 import { DialogProvider } from "./context/DialogContext"
 import { ManagementTab } from "./components/tabs/ManagementTab"
+import { AnalyticsTab } from "./components/tabs/AnalyticsTab"
 import { TeacherToolsTab } from "./components/tabs/TeacherToolsTab"
 
   export function App() {
     return (
       <AuthContextProvider>
-          <BrowserRouter>
+          <BrowserRouter basename={import.meta.env.BASE_URL}>
         <DialogProvider>
             <AppContent />
         </DialogProvider>
@@ -62,6 +63,7 @@ import { TeacherToolsTab } from "./components/tabs/TeacherToolsTab"
             <Route path="/create" element={<CreateQuizTab />}></Route>
             <Route path="/todo" element={<QuizesToDoTab/>}></Route>
             <Route path="/teacher-tools" element={<TeacherToolsTab/>}></Route>
+            <Route path="/analytics/:quizId" element={<AnalyticsTab/>}></Route>
             <Route path="/management" element={<ManagementTab/>}></Route>
             <Route ></Route>
           </Routes>

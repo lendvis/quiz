@@ -21,6 +21,13 @@ router.get('/cards', (req, res, next) => {
 }, quizController.getCards);
 //router.get("/cards/passed", authMiddleware,  quizController.getPassedCards.bind(quizController));
 router.get(
+    "/:quizId/analytics",
+    authMiddleware,
+    roleMiddleware("teacher", "leadership"),
+    quizController.getAnalytics
+);
+
+router.get(
     "/:quizId/student-results",
     authMiddleware,
     roleMiddleware("teacher", "leadership"),

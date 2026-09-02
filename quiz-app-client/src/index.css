@@ -1,63 +1,76 @@
+@import url("https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
 @import "tailwindcss";
+/* Шаблон был написан на indigo/blue. Вместо правки сотни классов переопределяем
+   сами цвета палитры — Tailwind v4 позволяет это одним блоком. */
+@theme {
+  --color-indigo-300: #93c0ff;
+  --color-indigo-400: #6ea8fe;
+  --color-indigo-500: #6ea8fe;
+  --color-indigo-600: #5b96ec;
+  --color-indigo-700: #4a83d6;
+  --color-blue-400: #6ea8fe;
+  --color-blue-500: #6ea8fe;
+  --color-blue-600: #5b96ec;
+}
 
 :root {
-  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Golos Text', system-ui, -apple-system, sans-serif;
   font-weight: 400;
   color-scheme: dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --theme-bg: #020617;
-  --theme-bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-  --theme-auth-gradient: linear-gradient(135deg, #0f172a 0%, #312e81 45%, #111827 100%);
-  --theme-sidebar-bg: rgba(15, 23, 42, 0.96);
-  --theme-panel-bg: rgba(15, 23, 42, 0.72);
-  --theme-panel-muted: rgba(30, 41, 59, 0.76);
-  --theme-panel-solid: #0f172a;
-  --theme-border: rgba(71, 85, 105, 0.48);
-  --theme-border-strong: rgba(100, 116, 139, 0.64);
-  --theme-text-primary: #f8fafc;
-  --theme-text-secondary: #cbd5e1;
-  --theme-text-muted: #94a3b8;
-  --theme-surface-hover: rgba(51, 65, 85, 0.94);
-  --theme-toggle-bg: rgba(30, 41, 59, 0.84);
-  --theme-toggle-hover: rgba(51, 65, 85, 0.96);
-  --theme-quiz-card-bg: #0f172a;
-  --theme-quiz-card-overlay: linear-gradient(180deg, rgba(2, 6, 23, 0.08) 0%, rgba(15, 23, 42, 0.48) 42%, rgba(2, 6, 23, 0.9) 100%);
-  --theme-quiz-card-overlay-hover: linear-gradient(180deg, rgba(49, 46, 129, 0.08) 0%, rgba(49, 46, 129, 0.34) 42%, rgba(30, 41, 59, 0.9) 100%);
-  --theme-quiz-card-chip-bg: rgba(255, 255, 255, 0.12);
-  --theme-quiz-card-chip-border: rgba(255, 255, 255, 0.2);
-  --theme-progress-track: rgba(71, 85, 105, 0.92);
-  --theme-progress-fill: rgba(100, 116, 139, 0.96);
-  --theme-shadow: 0 24px 60px rgba(2, 6, 23, 0.35);
+  --theme-bg: #0d1013;
+  --theme-bg-gradient: linear-gradient(180deg, #0d1013 0%, #101519 100%);
+  --theme-auth-gradient: radial-gradient(120% 90% at 20% 0%, #16202b 0%, #0d1013 60%);
+  --theme-sidebar-bg: #141a1f;
+  --theme-panel-bg: #141a1f;
+  --theme-panel-muted: #1a222a;
+  --theme-panel-solid: #141a1f;
+  --theme-border: #232d36;
+  --theme-border-strong: #33414e;
+  --theme-text-primary: #e8eef3;
+  --theme-text-secondary: #95a3b0;
+  --theme-text-muted: #68757f;
+  --theme-surface-hover: #1f2831;
+  --theme-toggle-bg: #1a222a;
+  --theme-toggle-hover: #232d36;
+  --theme-quiz-card-bg: #141a1f;
+  --theme-quiz-card-overlay: linear-gradient(180deg, rgba(13,16,19,0) 0%, rgba(13,16,19,.55) 55%, rgba(13,16,19,.92) 100%);
+  --theme-quiz-card-overlay-hover: linear-gradient(180deg, rgba(110,168,254,.10) 0%, rgba(13,16,19,.6) 55%, rgba(13,16,19,.94) 100%);
+  --theme-quiz-card-chip-bg: rgba(110,168,254,.12);
+  --theme-quiz-card-chip-border: rgba(110,168,254,.28);
+  --theme-progress-track: #232d36;
+  --theme-progress-fill: #6ea8fe;
+  --theme-shadow: 0 18px 44px rgba(0,0,0,.45);
 }
 
 :root[data-theme="light"] {
   color-scheme: light;
-  --theme-bg: #eef4ff;
-  --theme-bg-gradient: linear-gradient(135deg, #f8fbff 0%, #e3ecff 52%, #f3f7ff 100%);
-  --theme-auth-gradient: linear-gradient(135deg, #eff6ff 0%, #dbeafe 40%, #e0f2fe 100%);
-  --theme-sidebar-bg: rgba(255, 255, 255, 0.9);
-  --theme-panel-bg: rgba(255, 255, 255, 0.8);
-  --theme-panel-muted: rgba(241, 245, 249, 0.88);
-  --theme-panel-solid: rgba(255, 255, 255, 0.98);
-  --theme-border: rgba(148, 163, 184, 0.34);
-  --theme-border-strong: rgba(148, 163, 184, 0.52);
-  --theme-text-primary: #0f172a;
-  --theme-text-secondary: #334155;
-  --theme-text-muted: #64748b;
-  --theme-surface-hover: rgba(226, 232, 240, 0.96);
-  --theme-toggle-bg: rgba(255, 255, 255, 0.88);
-  --theme-toggle-hover: rgba(241, 245, 249, 0.98);
+  --theme-bg: #f4f6f8;
+  --theme-bg-gradient: linear-gradient(180deg, #f7f9fb 0%, #eef2f6 100%);
+  --theme-auth-gradient: radial-gradient(120% 90% at 20% 0%, #ffffff 0%, #e9eef4 65%);
+  --theme-sidebar-bg: #ffffff;
+  --theme-panel-bg: #ffffff;
+  --theme-panel-muted: #eef2f6;
+  --theme-panel-solid: #ffffff;
+  --theme-border: #dde3e9;
+  --theme-border-strong: #c3ccd5;
+  --theme-text-primary: #131a20;
+  --theme-text-secondary: #4c5762;
+  --theme-text-muted: #7a8590;
+  --theme-surface-hover: #e7edf3;
+  --theme-toggle-bg: #eef2f6;
+  --theme-toggle-hover: #e2e9f0;
   --theme-quiz-card-bg: #ffffff;
-  --theme-quiz-card-overlay: linear-gradient(180deg, rgba(248, 250, 252, 0.16) 0%, rgba(255, 255, 255, 0.52) 40%, rgba(226, 232, 240, 0.94) 100%);
-  --theme-quiz-card-overlay-hover: linear-gradient(180deg, rgba(224, 231, 255, 0.12) 0%, rgba(224, 231, 255, 0.42) 40%, rgba(224, 231, 255, 0.92) 100%);
-  --theme-quiz-card-chip-bg: rgba(15, 23, 42, 0.06);
-  --theme-quiz-card-chip-border: rgba(148, 163, 184, 0.3);
-  --theme-progress-track: rgba(203, 213, 225, 0.96);
-  --theme-progress-fill: rgba(148, 163, 184, 0.98);
-  --theme-shadow: 0 22px 48px rgba(148, 163, 184, 0.22);
+  --theme-quiz-card-overlay: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(19,26,32,.06) 55%, rgba(19,26,32,.14) 100%);
+  --theme-quiz-card-overlay-hover: linear-gradient(180deg, rgba(21,101,192,.06) 0%, rgba(19,26,32,.08) 55%, rgba(19,26,32,.16) 100%);
+  --theme-quiz-card-chip-bg: rgba(21,101,192,.10);
+  --theme-quiz-card-chip-border: rgba(21,101,192,.24);
+  --theme-progress-track: #dde3e9;
+  --theme-progress-fill: #1565c0;
+  --theme-shadow: 0 10px 30px rgba(19,26,32,.10);
 }
 
 html, body, #root {
@@ -75,12 +88,12 @@ body {
 
 a {
   font-weight: 500;
-  color: #818cf8;
+  color: #6ea8fe;
   text-decoration: none;
   transition: color 0.2s ease-in-out;
 }
 a:hover {
-  color: #a5b4fc;
+  color: #93c0ff;
 }
 
 .app-shell {
@@ -318,3 +331,21 @@ a:hover {
 :root[data-theme="light"] [class~="focus:ring-offset-slate-800"]:focus {
   --tw-ring-offset-color: var(--theme-panel-solid);
 }
+
+/* Числа везде выравниваются по разрядам: таблицы и метрики нельзя читать пропорциональным шрифтом */
+.num, .tabular {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Микроподписи разделов */
+.eyebrow {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--theme-text-muted);
+}
+
+:root { --theme-accent: #6ea8fe; --theme-accent-soft: #12243d; --theme-ok: #4ec98b; --theme-bad: #f0776a; --theme-warn: #e6b45c; }
+:root[data-theme="light"] { --theme-accent: #1565c0; --theme-accent-soft: #e3edfb; --theme-ok: #1a7a4a; --theme-bad: #b4432f; --theme-warn: #8a6410; }

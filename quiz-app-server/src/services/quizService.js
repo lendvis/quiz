@@ -207,6 +207,34 @@ class QuizService {
         };
     }
 
+    async getQuizAnalytics(requester, quizId) {
+        if (!requester?.id) {
+            throw createHttpError("Пользователь не авторизован", 401);
+        }
+
+        const role = await this.resolveUserRole(requester);
+        if (role !== "teacher" && role !== "leadership") {
+            throw createHttpError("Аналитика доступна преподавателю и руководству", 403);
+        }
+
+        const quizResult = await quizRepository.findById(quizId);
+        const quiz = quizResult.rows[0];
+        if (!quiz) {
+            throw createHttpError("Тест не найден", 404);
+        }
+
+        const analytics = await quizRepository.getQuizAnalytics(quizId);
+
+        return {
+            quiz: { id: quiz.id, name: quiz.name },
+            summary: analytics?.summary ?? null,
+            dist: analytics?.dist ?? [],
+            questions: analytics?.questions ?? [],
+            students: analytics?.students ?? [],
+            groups: analytics?.groups ?? [],
+        };
+    }
+
     async getQuizSummaryList(requester, quizId, targetUserId = null) {
         if (!requester?.id) {
             throw createHttpError("Пользователь не авторизован", 401);

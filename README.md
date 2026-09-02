@@ -1,8 +1,13 @@
 # QuizSpace — платформа тестирования (LMS)
 
-**EN.** A role-based quiz/LMS platform: React + Vite + TypeScript on the front, Express + PostgreSQL on the back, wrapped in Docker Compose with healthchecks and an idempotent seed. Leadership creates groups and teachers, teachers author quizzes and assign them to groups, students take the tests and get scored instantly. There is no hosted demo because the app needs its own PostgreSQL — instead the whole stack comes up with a single command and ships with pre-seeded demo accounts and quizzes.
+### 📊 [Живое демо](https://olegg000.github.io/quiz/) — вход в один клик, дальше «Результаты и назначение» → «Аналитика»
 
-Живого демо нет намеренно: приложению нужна своя база PostgreSQL. Вместо этого весь стек поднимается **одной командой** и сразу содержит демо-аккаунты, группы и готовые тесты.
+Демо работает без бекенда: ответы API записаны с рабочего стенда. Логины `teacher`, `student`, `admin`, пароль `P@ssw0rd` подставлен в форму.
+
+
+**EN.** A role-based quiz/LMS platform: React + Vite + TypeScript on the front, Express + PostgreSQL on the back, wrapped in Docker Compose with healthchecks and an idempotent seed. Leadership creates groups and teachers, teachers author quizzes and assign them to groups, students take the tests and get scored instantly. The full stack comes up with a single command and ships with pre-seeded demo accounts, groups and quizzes; the public demo is the same client build replaying recorded API responses, so it opens straight in the browser.
+
+Полная версия требует своей PostgreSQL и поднимается **одной командой**; публичное демо — та же сборка клиента с записанными ответами API, поэтому его можно открыть по ссылке.
 
 ---
 
@@ -63,15 +68,36 @@ docker compose down -v
 
 Роль зашивается в JWT при входе; на сервере её проверяет `roleMiddleware`, на клиенте — `RoleGuard`.
 
+## Аналитика теста
+
+Отдельный экран для преподавателя, который отвечает на вопрос «чему на самом деле научились ученики».
+Всё считается одним SQL-запросом (`GET /api/quizzes/:id/analytics`) по ответам и меткам времени — без
+отдельной таблицы метрик и без пересчёта на клиенте.
+
+| Метрика | Зачем нужна |
+| --- | --- |
+| Средний балл, медиана, разброс | Медиана показывает типичного ученика, среднее — общий уровень; расхождение выдаёт перекос |
+| Распределение по интервалам | Видно, группа «провалилась» целиком или тянут вниз несколько человек |
+| Доля верных по каждому вопросу | Вопрос, который решают почти все, ничего не проверяет; вопрос, где ошибается большинство, обычно сформулирован неудачно |
+| Среднее время на вопрос | Долгий вопрос при низкой доле верных — почти всегда проблема формулировки, а не темы |
+| Самый частый неверный вариант | Если один дистрактор собирает половину группы, это общее заблуждение, а не случайный разброс |
+| Срез по группам | Сравнение охвата и среднего балла между группами |
+
+На демо-данных это сразу видно: вопрос «Сколько будет 2 + 2?» решают 92% за 35 секунд — он не проверяет
+ничего; а на «Чему равен квадратный корень из 144?» верных 35%, времени уходит 95 секунд, и вариант «14»
+выбрали 13 человек из 26.
+
 ## Скриншоты
 
-| Вход | Каталог тестов (ученик) |
+![Аналитика теста: разбор вопросов, распределение баллов и срез по группам](docs/screenshots/quiz-analytics.png)
+
+| Вход | Каталог тестов |
 | --- | --- |
 | ![Экран входа](docs/screenshots/quiz-login.png) | ![Каталог тестов](docs/screenshots/quiz-catalog.png) |
 
-| Результат прохождения | Результаты учеников (преподаватель) |
+| Работа с результатами (преподаватель) | |
 | --- | --- |
-| ![Результаты теста](docs/screenshots/quiz-results.png) | ![Результаты учеников](docs/screenshots/quiz-teacher-results.png) |
+| ![Результаты и назначения](docs/screenshots/quiz-teacher-results.png) | |
 
 ## Архитектура
 

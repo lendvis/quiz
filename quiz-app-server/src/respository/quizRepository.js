@@ -653,6 +653,80 @@ class QuizRepository {
             client.release();
         }
     }
+
+    // Аналитика теста одним запросом: сводка, распределение баллов,
+    // разбор каждого вопроса (доля верных, время, самый частый неверный вариант),
+    // срез по группам и поимённые результаты.
+    async getQuizAnalytics(quizId) {
+        const result = await query(`
+            WITH att AS (
+                SELECT qs.id, qs.user_id, qs.created_at,
+                       COUNT(*) FILTER (WHERE ao.is_correct) AS correct,
+                       COUNT(*) AS total,
+                       EXTRACT(EPOCH FROM MAX(ua.created_at) - qs.created_at) AS secs
+                FROM public.quiz_stats qs
+                JOIN public.user_answer ua ON ua.quiz_stats_id = qs.id
+                JOIN public.answer_option ao ON ao.id = ua.selected_answer_option_id
+                WHERE qs.quiz_id = $1
+                GROUP BY qs.id
+            ),
+            sc AS (SELECT *, ROUND(100.0 * correct / total) AS pct FROM att),
+            item AS (
+                SELECT ROW_NUMBER() OVER (ORDER BY qn.id) AS n, qn.id, qn.text,
+                       ROUND(100.0 * COUNT(*) FILTER (WHERE ao.is_correct) / COUNT(*)) AS pct,
+                       ROUND(AVG(EXTRACT(EPOCH FROM ua.created_at - COALESCE(prev.created_at, s.created_at))))::int AS sec
+                FROM public.question qn
+                JOIN public.user_answer ua ON ua.question_id = qn.id
+                JOIN public.answer_option ao ON ao.id = ua.selected_answer_option_id
+                JOIN public.quiz_stats s ON s.id = ua.quiz_stats_id
+                LEFT JOIN LATERAL (
+                    SELECT created_at FROM public.user_answer p
+                    WHERE p.quiz_stats_id = ua.quiz_stats_id AND p.created_at < ua.created_at
+                    ORDER BY p.created_at DESC LIMIT 1
+                ) prev ON TRUE
+                WHERE qn.quiz_id = $1 AND qn.is_deleted = FALSE
+                GROUP BY qn.id, qn.text
+            )
+            SELECT json_build_object(
+              'summary', (SELECT json_build_object(
+                  'attempts', COUNT(*), 'avg', ROUND(AVG(pct)),
+                  'median', ROUND(PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY pct)),
+                  'min', MIN(pct), 'max', MAX(pct),
+                  'avgMin', ROUND(AVG(secs) / 60.0, 1),
+                  'passed', COUNT(*) FILTER (WHERE pct >= 60)) FROM sc),
+              'dist', (SELECT json_agg(json_build_object('bucket', b, 'n', c) ORDER BY b)
+                       FROM (SELECT LEAST(width_bucket(pct, 0, 100, 5), 5) AS b, COUNT(*) AS c
+                             FROM sc GROUP BY 1) d),
+              'questions', (SELECT json_agg(json_build_object(
+                  'n', n, 'text', text, 'pct', pct, 'sec', sec,
+                  'topWrong', (SELECT json_build_object('text', ao2.text, 'n', COUNT(*))
+                               FROM public.user_answer ua2
+                               JOIN public.answer_option ao2 ON ao2.id = ua2.selected_answer_option_id
+                               WHERE ua2.question_id = item.id AND ao2.is_correct = FALSE
+                               GROUP BY ao2.text ORDER BY COUNT(*) DESC LIMIT 1)) ORDER BY n)
+                FROM item),
+              'students', (SELECT json_agg(json_build_object(
+                  'name', u.display_name, 'grp', g.name, 'pct', sc.pct,
+                  'correct', sc.correct, 'total', sc.total,
+                  'min', ROUND(sc.secs / 60.0, 1),
+                  'date', to_char(sc.created_at, 'DD.MM')) ORDER BY sc.pct DESC, u.display_name)
+                FROM sc
+                JOIN public."user" u ON u.id = sc.user_id
+                LEFT JOIN public."group" g ON g.id = u.group_id),
+              'groups', (SELECT json_agg(json_build_object(
+                  'name', name, 'students', students, 'done', done, 'avg', avg) ORDER BY name)
+                FROM (SELECT g.name, COUNT(DISTINCT u.id) AS students,
+                             COUNT(DISTINCT s.id) AS done, ROUND(AVG(sc.pct)) AS avg
+                      FROM public."group" g
+                      JOIN public."user" u ON u.group_id = g.id
+                      LEFT JOIN public.quiz_stats s ON s.user_id = u.id AND s.quiz_id = $1
+                      LEFT JOIN sc ON sc.id = s.id
+                      GROUP BY g.name) gr)
+            ) AS data
+        `, [quizId]);
+
+        return result.rows[0]?.data ?? null;
+    }
 }
 
 export default new QuizRepository();

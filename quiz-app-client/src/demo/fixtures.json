@@ -1,0 +1,1816 @@
+{
+ "POST auth/login::teacher": {
+  "message": "OK",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJyb2xlIjoidGVhY2hlciIsImRpc3BsYXlOYW1lIjoi0KLQtdGB0YLQvtCy0YvQuSDQv9GA0LXQv9C-0LTQsNCy0LDRgtC10LvRjCIsInVzZXJuYW1lIjoidGVhY2hlciIsImlhdCI6MTc4ODM2NjgzOSwiZXhwIjoxNzg4NDUzMjM5fQ.4xEIyL-Gl5k7dM9PaMGEK2fB8W1xBXjwVAu4hKVweU0",
+  "role": "teacher",
+  "user": {
+   "id": 2,
+   "username": "teacher",
+   "displayName": "Тестовый преподаватель",
+   "role": "teacher",
+   "group": null
+  }
+ },
+ "POST auth/login::student": {
+  "message": "OK",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMiLCJyb2xlIjoic3R1ZGVudCIsImRpc3BsYXlOYW1lIjoi0KLQtdGB0YLQvtCy0YvQuSDRg9GH0LXQvdC40LoiLCJ1c2VybmFtZSI6InN0dWRlbnQiLCJpYXQiOjE3ODgzNjY4MzksImV4cCI6MTc4ODQ1MzIzOX0.X83pxCmYdHsibZh2Qyd4dAy7hkA5y-uNXGO6zCgNzns",
+  "role": "student",
+  "user": {
+   "id": 3,
+   "username": "student",
+   "displayName": "Тестовый ученик",
+   "role": "student",
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   }
+  }
+ },
+ "POST auth/login::admin": {
+  "message": "OK",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJyb2xlIjoibGVhZGVyc2hpcCIsImRpc3BsYXlOYW1lIjoi0JDQtNC80LjQvdC40YHRgtGA0LDRgtC-0YAiLCJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzg4MzY2ODM5LCJleHAiOjE3ODg0NTMyMzl9.q7XYewvO7ntZJ6xBoAEByQ5NidCzeAV1FkpwjXtjHtY",
+  "role": "leadership",
+  "user": {
+   "id": 1,
+   "username": "admin",
+   "displayName": "Администратор",
+   "role": "leadership",
+   "group": null
+  }
+ },
+ "GET auth/profile::teacher": {
+  "id": 2,
+  "username": "teacher",
+  "displayName": "Тестовый преподаватель",
+  "role": "teacher",
+  "group": null,
+  "user": {
+   "id": 2,
+   "username": "teacher",
+   "displayName": "Тестовый преподаватель",
+   "role": "teacher",
+   "group": null
+  }
+ },
+ "GET quizzes/cards::teacher": [
+  {
+   "id": "2",
+   "name": "История: XX век",
+   "description": "Проверка базовых знаний по истории XX века",
+   "image": null,
+   "questionCount": 4,
+   "isAssigned": false,
+   "hasAttempt": false,
+   "isPassed": false,
+   "attemptCount": 0
+  },
+  {
+   "id": "1",
+   "name": "Математика: базовый уровень",
+   "description": "Короткий тест на базовые арифметические действия",
+   "image": null,
+   "questionCount": 5,
+   "isAssigned": false,
+   "hasAttempt": false,
+   "isPassed": false,
+   "attemptCount": 0
+  }
+ ],
+ "GET quizzes": [
+  {
+   "id": "2",
+   "name": "История: XX век",
+   "image": null,
+   "questions_count": "4"
+  },
+  {
+   "id": "1",
+   "name": "Математика: базовый уровень",
+   "image": null,
+   "questions_count": "5"
+  }
+ ],
+ "GET quizzes/1": {
+  "id": "1",
+  "name": "Математика: базовый уровень",
+  "description": "Короткий тест на базовые арифметические действия",
+  "image": null,
+  "settings": {
+   "passPercent": 70,
+   "timeLimitMinutes": 15,
+   "showCorrectAnswers": true,
+   "allowRetake": true
+  },
+  "author_id": "2",
+  "questions": [
+   {
+    "id": "1",
+    "text": "Сколько будет 2 + 2?",
+    "image": null,
+    "answers": [
+     {
+      "id": "1",
+      "text": "3",
+      "is_correct": false
+     },
+     {
+      "id": "2",
+      "text": "4",
+      "is_correct": true
+     },
+     {
+      "id": "3",
+      "text": "5",
+      "is_correct": false
+     }
+    ]
+   },
+   {
+    "id": "3",
+    "text": "Сколько будет 15% от 200?",
+    "image": null,
+    "answers": [
+     {
+      "id": "7",
+      "text": "35",
+      "is_correct": false
+     },
+     {
+      "id": "8",
+      "text": "30",
+      "is_correct": true
+     },
+     {
+      "id": "9",
+      "text": "20",
+      "is_correct": false
+     }
+    ]
+   },
+   {
+    "id": "4",
+    "text": "Сколько процентов составляет 45 от 180?",
+    "image": null,
+    "answers": [
+     {
+      "id": "10",
+      "text": "30%",
+      "is_correct": false
+     },
+     {
+      "id": "11",
+      "text": "25%",
+      "is_correct": true
+     },
+     {
+      "id": "12",
+      "text": "20%",
+      "is_correct": false
+     }
+    ]
+   },
+   {
+    "id": "5",
+    "text": "Чему равен квадратный корень из 144?",
+    "image": null,
+    "answers": [
+     {
+      "id": "13",
+      "text": "14",
+      "is_correct": false
+     },
+     {
+      "id": "14",
+      "text": "12",
+      "is_correct": true
+     },
+     {
+      "id": "15",
+      "text": "10",
+      "is_correct": false
+     }
+    ]
+   },
+   {
+    "id": "6",
+    "text": "Сколько будет 7 × 8?",
+    "image": null,
+    "answers": [
+     {
+      "id": "16",
+      "text": "64",
+      "is_correct": false
+     },
+     {
+      "id": "17",
+      "text": "56",
+      "is_correct": true
+     },
+     {
+      "id": "18",
+      "text": "48",
+      "is_correct": false
+     }
+    ]
+   }
+  ]
+ },
+ "GET quizzes/1/analytics": {
+  "quiz": {
+   "id": "1",
+   "name": "Математика: базовый уровень"
+  },
+  "summary": {
+   "attempts": 26,
+   "avg": 55,
+   "median": 60,
+   "min": 0,
+   "max": 100,
+   "avgMin": 5.1,
+   "passed": 16
+  },
+  "dist": [
+   {
+    "bucket": 1,
+    "n": 1
+   },
+   {
+    "bucket": 2,
+    "n": 2
+   },
+   {
+    "bucket": 3,
+    "n": 7
+   },
+   {
+    "bucket": 4,
+    "n": 9
+   },
+   {
+    "bucket": 5,
+    "n": 7
+   }
+  ],
+  "questions": [
+   {
+    "n": 1,
+    "text": "Сколько будет 2 + 2?",
+    "pct": 92,
+    "sec": 35,
+    "topWrong": {
+     "text": "3",
+     "n": 2
+    }
+   },
+   {
+    "n": 2,
+    "text": "Сколько будет 15% от 200?",
+    "pct": 58,
+    "sec": 54,
+    "topWrong": {
+     "text": "35",
+     "n": 8
+    }
+   },
+   {
+    "n": 3,
+    "text": "Сколько процентов составляет 45 от 180?",
+    "pct": 38,
+    "sec": 77,
+    "topWrong": {
+     "text": "30%",
+     "n": 10
+    }
+   },
+   {
+    "n": 4,
+    "text": "Чему равен квадратный корень из 144?",
+    "pct": 35,
+    "sec": 95,
+    "topWrong": {
+     "text": "14",
+     "n": 13
+    }
+   },
+   {
+    "n": 5,
+    "text": "Сколько будет 7 × 8?",
+    "pct": 54,
+    "sec": 44,
+    "topWrong": {
+     "text": "64",
+     "n": 10
+    }
+   }
+  ],
+  "students": [
+   {
+    "name": "Анна Ковалёва",
+    "grp": "Group A",
+    "pct": 100,
+    "correct": 5,
+    "total": 5,
+    "min": 5.2,
+    "date": "01.09"
+   },
+   {
+    "name": "Алина Щербак",
+    "grp": "Group B",
+    "pct": 80,
+    "correct": 4,
+    "total": 5,
+    "min": 5.2,
+    "date": "28.08"
+   },
+   {
+    "name": "Артём Волков",
+    "grp": "Group A",
+    "pct": 80,
+    "correct": 4,
+    "total": 5,
+    "min": 5.6,
+    "date": "31.08"
+   },
+   {
+    "name": "Виктория Жукова",
+    "grp": "Group B",
+    "pct": 80,
+    "correct": 4,
+    "total": 5,
+    "min": 5.3,
+    "date": "01.09"
+   },
+   {
+    "name": "Дмитрий Орлов",
+    "grp": "Group A",
+    "pct": 80,
+    "correct": 4,
+    "total": 5,
+    "min": 5.2,
+    "date": "26.08"
+   },
+   {
+    "name": "Мария Соколова",
+    "grp": "Group A",
+    "pct": 80,
+    "correct": 4,
+    "total": 5,
+    "min": 4.8,
+    "date": "28.08"
+   },
+   {
+    "name": "Степан Гордеев",
+    "grp": "Group B",
+    "pct": 80,
+    "correct": 4,
+    "total": 5,
+    "min": 4.7,
+    "date": "25.08"
+   },
+   {
+    "name": "Алиса Ершова",
+    "grp": "Group A",
+    "pct": 60,
+    "correct": 3,
+    "total": 5,
+    "min": 4.8,
+    "date": "26.08"
+   },
+   {
+    "name": "Глеб Рябов",
+    "grp": "Group B",
+    "pct": 60,
+    "correct": 3,
+    "total": 5,
+    "min": 5.2,
+    "date": "01.09"
+   },
+   {
+    "name": "Дарья Крылова",
+    "grp": "Group B",
+    "pct": 60,
+    "correct": 3,
+    "total": 5,
+    "min": 5.6,
+    "date": "30.08"
+   },
+   {
+    "name": "Елена Гусева",
+    "grp": "Group A",
+    "pct": 60,
+    "correct": 3,
+    "total": 5,
+    "min": 5.1,
+    "date": "25.08"
+   },
+   {
+    "name": "Игорь Лебедев",
+    "grp": "Group A",
+    "pct": 60,
+    "correct": 3,
+    "total": 5,
+    "min": 5.1,
+    "date": "30.08"
+   },
+   {
+    "name": "Кирилл Дорохов",
+    "grp": "Group B",
+    "pct": 60,
+    "correct": 3,
+    "total": 5,
+    "min": 4.5,
+    "date": "27.08"
+   },
+   {
+    "name": "Максим Панов",
+    "grp": "Group B",
+    "pct": 60,
+    "correct": 3,
+    "total": 5,
+    "min": 4.8,
+    "date": "31.08"
+   },
+   {
+    "name": "Полина Зайцева",
+    "grp": "Group A",
+    "pct": 60,
+    "correct": 3,
+    "total": 5,
+    "min": 4.9,
+    "date": "02.09"
+   },
+   {
+    "name": "Роман Кузьмин",
+    "grp": "Group A",
+    "pct": 60,
+    "correct": 3,
+    "total": 5,
+    "min": 5.3,
+    "date": "28.08"
+   },
+   {
+    "name": "Вера Носова",
+    "grp": "Group B",
+    "pct": 40,
+    "correct": 2,
+    "total": 5,
+    "min": 4.9,
+    "date": "31.08"
+   },
+   {
+    "name": "Егор Быков",
+    "grp": "Group B",
+    "pct": 40,
+    "correct": 2,
+    "total": 5,
+    "min": 5.5,
+    "date": "29.08"
+   },
+   {
+    "name": "Ксения Морозова",
+    "grp": "Group A",
+    "pct": 40,
+    "correct": 2,
+    "total": 5,
+    "min": 5,
+    "date": "29.08"
+   },
+   {
+    "name": "Милана Царёва",
+    "grp": "Group B",
+    "pct": 40,
+    "correct": 2,
+    "total": 5,
+    "min": 4.9,
+    "date": "26.08"
+   },
+   {
+    "name": "Павел Титов",
+    "grp": "Group A",
+    "pct": 40,
+    "correct": 2,
+    "total": 5,
+    "min": 5,
+    "date": "01.09"
+   },
+   {
+    "name": "Софья Белова",
+    "grp": "Group A",
+    "pct": 40,
+    "correct": 2,
+    "total": 5,
+    "min": 5.3,
+    "date": "30.08"
+   },
+   {
+    "name": "Тимур Савельев",
+    "grp": "Group A",
+    "pct": 40,
+    "correct": 2,
+    "total": 5,
+    "min": 5.1,
+    "date": "02.09"
+   },
+   {
+    "name": "Марк Литвинов",
+    "grp": "Group B",
+    "pct": 20,
+    "correct": 1,
+    "total": 5,
+    "min": 5.3,
+    "date": "30.08"
+   },
+   {
+    "name": "Никита Фомин",
+    "grp": "Group A",
+    "pct": 20,
+    "correct": 1,
+    "total": 5,
+    "min": 5,
+    "date": "27.08"
+   },
+   {
+    "name": "Ульяна Мишина",
+    "grp": "Group B",
+    "pct": 0,
+    "correct": 0,
+    "total": 5,
+    "min": 5.2,
+    "date": "02.09"
+   }
+  ],
+  "groups": [
+   {
+    "name": "Group A",
+    "students": 15,
+    "done": 14,
+    "avg": 59
+   },
+   {
+    "name": "Group B",
+    "students": 12,
+    "done": 12,
+    "avg": 52
+   }
+  ]
+ },
+ "GET quizzes/1/student-results": [
+  {
+   "quizStatsId": 36,
+   "completedAt": "2026-09-02T11:42:07.863Z",
+   "student": {
+    "id": 26,
+    "displayName": "Ульяна Мишина",
+    "username": "student23"
+   },
+   "group": {
+    "id": 2,
+    "name": "Group B"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 0,
+   "passPercent": 70,
+   "wrongAnswers": 5,
+   "unanswered": 0,
+   "accuracy": 0,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 9,
+   "completedAt": "2026-09-02T10:42:07.863Z",
+   "student": {
+    "id": 8,
+    "displayName": "Полина Зайцева",
+    "username": "student05"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 3,
+   "passPercent": 70,
+   "wrongAnswers": 2,
+   "unanswered": 0,
+   "accuracy": 60,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 27,
+   "completedAt": "2026-09-02T06:42:07.863Z",
+   "student": {
+    "id": 17,
+    "displayName": "Тимур Савельев",
+    "username": "student14"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 2,
+   "passPercent": 70,
+   "wrongAnswers": 3,
+   "unanswered": 0,
+   "accuracy": 40,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 28,
+   "completedAt": "2026-09-01T12:42:07.863Z",
+   "student": {
+    "id": 18,
+    "displayName": "Виктория Жукова",
+    "username": "student15"
+   },
+   "group": {
+    "id": 2,
+    "name": "Group B"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 4,
+   "passPercent": 70,
+   "wrongAnswers": 1,
+   "unanswered": 0,
+   "accuracy": 80,
+   "isPassed": true
+  },
+  {
+   "quizStatsId": 1,
+   "completedAt": "2026-09-01T11:42:07.863Z",
+   "student": {
+    "id": 4,
+    "displayName": "Анна Ковалёва",
+    "username": "student01"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 5,
+   "passPercent": 70,
+   "wrongAnswers": 0,
+   "unanswered": 0,
+   "accuracy": 100,
+   "isPassed": true
+  },
+  {
+   "quizStatsId": 37,
+   "completedAt": "2026-09-01T10:42:07.863Z",
+   "student": {
+    "id": 27,
+    "displayName": "Глеб Рябов",
+    "username": "student24"
+   },
+   "group": {
+    "id": 2,
+    "name": "Group B"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 3,
+   "passPercent": 70,
+   "wrongAnswers": 2,
+   "unanswered": 0,
+   "accuracy": 60,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 19,
+   "completedAt": "2026-09-01T07:42:07.863Z",
+   "student": {
+    "id": 13,
+    "displayName": "Павел Титов",
+    "username": "student10"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 2,
+   "passPercent": 70,
+   "wrongAnswers": 3,
+   "unanswered": 0,
+   "accuracy": 40,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 29,
+   "completedAt": "2026-08-31T11:42:07.863Z",
+   "student": {
+    "id": 19,
+    "displayName": "Максим Панов",
+    "username": "student16"
+   },
+   "group": {
+    "id": 2,
+    "name": "Group B"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 3,
+   "passPercent": 70,
+   "wrongAnswers": 2,
+   "unanswered": 0,
+   "accuracy": 60,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 38,
+   "completedAt": "2026-08-31T09:42:07.863Z",
+   "student": {
+    "id": 28,
+    "displayName": "Вера Носова",
+    "username": "student25"
+   },
+   "group": {
+    "id": 2,
+    "name": "Group B"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 2,
+   "passPercent": 70,
+   "wrongAnswers": 3,
+   "unanswered": 0,
+   "accuracy": 40,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 11,
+   "completedAt": "2026-08-31T08:42:07.863Z",
+   "student": {
+    "id": 9,
+    "displayName": "Артём Волков",
+    "username": "student06"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 4,
+   "passPercent": 70,
+   "wrongAnswers": 1,
+   "unanswered": 0,
+   "accuracy": 80,
+   "isPassed": true
+  },
+  {
+   "quizStatsId": 21,
+   "completedAt": "2026-08-30T12:42:07.863Z",
+   "student": {
+    "id": 14,
+    "displayName": "Софья Белова",
+    "username": "student11"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 2,
+   "passPercent": 70,
+   "wrongAnswers": 3,
+   "unanswered": 0,
+   "accuracy": 40,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 30,
+   "completedAt": "2026-08-30T10:42:07.863Z",
+   "student": {
+    "id": 20,
+    "displayName": "Дарья Крылова",
+    "username": "student17"
+   },
+   "group": {
+    "id": 2,
+    "name": "Group B"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 3,
+   "passPercent": 70,
+   "wrongAnswers": 2,
+   "unanswered": 0,
+   "accuracy": 60,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 3,
+   "completedAt": "2026-08-30T09:42:07.863Z",
+   "student": {
+    "id": 5,
+    "displayName": "Игорь Лебедев",
+    "username": "student02"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 3,
+   "passPercent": 70,
+   "wrongAnswers": 2,
+   "unanswered": 0,
+   "accuracy": 60,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 39,
+   "completedAt": "2026-08-30T08:42:07.863Z",
+   "student": {
+    "id": 29,
+    "displayName": "Марк Литвинов",
+    "username": "student26"
+   },
+   "group": {
+    "id": 2,
+    "name": "Group B"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 1,
+   "passPercent": 70,
+   "wrongAnswers": 4,
+   "unanswered": 0,
+   "accuracy": 20,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 31,
+   "completedAt": "2026-08-29T09:42:07.863Z",
+   "student": {
+    "id": 21,
+    "displayName": "Егор Быков",
+    "username": "student18"
+   },
+   "group": {
+    "id": 2,
+    "name": "Group B"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 2,
+   "passPercent": 70,
+   "wrongAnswers": 3,
+   "unanswered": 0,
+   "accuracy": 40,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 13,
+   "completedAt": "2026-08-29T06:42:07.863Z",
+   "student": {
+    "id": 10,
+    "displayName": "Ксения Морозова",
+    "username": "student07"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 2,
+   "passPercent": 70,
+   "wrongAnswers": 3,
+   "unanswered": 0,
+   "accuracy": 40,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 23,
+   "completedAt": "2026-08-28T10:42:07.863Z",
+   "student": {
+    "id": 15,
+    "displayName": "Роман Кузьмин",
+    "username": "student12"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 3,
+   "passPercent": 70,
+   "wrongAnswers": 2,
+   "unanswered": 0,
+   "accuracy": 60,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 32,
+   "completedAt": "2026-08-28T08:42:07.863Z",
+   "student": {
+    "id": 22,
+    "displayName": "Алина Щербак",
+    "username": "student19"
+   },
+   "group": {
+    "id": 2,
+    "name": "Group B"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 4,
+   "passPercent": 70,
+   "wrongAnswers": 1,
+   "unanswered": 0,
+   "accuracy": 80,
+   "isPassed": true
+  },
+  {
+   "quizStatsId": 5,
+   "completedAt": "2026-08-28T07:42:07.863Z",
+   "student": {
+    "id": 6,
+    "displayName": "Мария Соколова",
+    "username": "student03"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 4,
+   "passPercent": 70,
+   "wrongAnswers": 1,
+   "unanswered": 0,
+   "accuracy": 80,
+   "isPassed": true
+  },
+  {
+   "quizStatsId": 15,
+   "completedAt": "2026-08-27T11:42:07.863Z",
+   "student": {
+    "id": 11,
+    "displayName": "Никита Фомин",
+    "username": "student08"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 1,
+   "passPercent": 70,
+   "wrongAnswers": 4,
+   "unanswered": 0,
+   "accuracy": 20,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 33,
+   "completedAt": "2026-08-27T07:42:07.863Z",
+   "student": {
+    "id": 23,
+    "displayName": "Кирилл Дорохов",
+    "username": "student20"
+   },
+   "group": {
+    "id": 2,
+    "name": "Group B"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 3,
+   "passPercent": 70,
+   "wrongAnswers": 2,
+   "unanswered": 0,
+   "accuracy": 60,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 7,
+   "completedAt": "2026-08-26T12:42:07.863Z",
+   "student": {
+    "id": 7,
+    "displayName": "Дмитрий Орлов",
+    "username": "student04"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 4,
+   "passPercent": 70,
+   "wrongAnswers": 1,
+   "unanswered": 0,
+   "accuracy": 80,
+   "isPassed": true
+  },
+  {
+   "quizStatsId": 25,
+   "completedAt": "2026-08-26T08:42:07.863Z",
+   "student": {
+    "id": 16,
+    "displayName": "Алиса Ершова",
+    "username": "student13"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 3,
+   "passPercent": 70,
+   "wrongAnswers": 2,
+   "unanswered": 0,
+   "accuracy": 60,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 34,
+   "completedAt": "2026-08-26T06:42:07.863Z",
+   "student": {
+    "id": 24,
+    "displayName": "Милана Царёва",
+    "username": "student21"
+   },
+   "group": {
+    "id": 2,
+    "name": "Group B"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 2,
+   "passPercent": 70,
+   "wrongAnswers": 3,
+   "unanswered": 0,
+   "accuracy": 40,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 35,
+   "completedAt": "2026-08-25T12:42:07.863Z",
+   "student": {
+    "id": 25,
+    "displayName": "Степан Гордеев",
+    "username": "student22"
+   },
+   "group": {
+    "id": 2,
+    "name": "Group B"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 4,
+   "passPercent": 70,
+   "wrongAnswers": 1,
+   "unanswered": 0,
+   "accuracy": 80,
+   "isPassed": true
+  },
+  {
+   "quizStatsId": 17,
+   "completedAt": "2026-08-25T09:42:07.863Z",
+   "student": {
+    "id": 12,
+    "displayName": "Елена Гусева",
+    "username": "student09"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 5,
+   "answeredQuestions": 5,
+   "correctAnswers": 3,
+   "passPercent": 70,
+   "wrongAnswers": 2,
+   "unanswered": 0,
+   "accuracy": 60,
+   "isPassed": false
+  }
+ ],
+ "GET quizzes/2": {
+  "id": "2",
+  "name": "История: XX век",
+  "description": "Проверка базовых знаний по истории XX века",
+  "image": null,
+  "settings": {
+   "passPercent": 60,
+   "timeLimitMinutes": 20,
+   "showCorrectAnswers": true,
+   "allowRetake": true
+  },
+  "author_id": "2",
+  "questions": [
+   {
+    "id": "2",
+    "text": "В каком году началась Вторая мировая война?",
+    "image": null,
+    "answers": [
+     {
+      "id": "4",
+      "text": "1939",
+      "is_correct": true
+     },
+     {
+      "id": "5",
+      "text": "1945",
+      "is_correct": false
+     },
+     {
+      "id": "6",
+      "text": "1941",
+      "is_correct": false
+     }
+    ]
+   },
+   {
+    "id": "7",
+    "text": "В каком году пала Берлинская стена?",
+    "image": null,
+    "answers": [
+     {
+      "id": "19",
+      "text": "1991",
+      "is_correct": false
+     },
+     {
+      "id": "20",
+      "text": "1989",
+      "is_correct": true
+     },
+     {
+      "id": "21",
+      "text": "1985",
+      "is_correct": false
+     }
+    ]
+   },
+   {
+    "id": "8",
+    "text": "Как называлась первая искусственная спутниковая программа СССР?",
+    "image": null,
+    "answers": [
+     {
+      "id": "22",
+      "text": "«Союз»",
+      "is_correct": false
+     },
+     {
+      "id": "23",
+      "text": "«Восток»",
+      "is_correct": false
+     },
+     {
+      "id": "24",
+      "text": "«Спутник»",
+      "is_correct": true
+     }
+    ]
+   },
+   {
+    "id": "9",
+    "text": "В каком году человек впервые полетел в космос?",
+    "image": null,
+    "answers": [
+     {
+      "id": "25",
+      "text": "1969",
+      "is_correct": false
+     },
+     {
+      "id": "26",
+      "text": "1961",
+      "is_correct": true
+     },
+     {
+      "id": "27",
+      "text": "1957",
+      "is_correct": false
+     }
+    ]
+   }
+  ]
+ },
+ "GET quizzes/2/analytics": {
+  "quiz": {
+   "id": "2",
+   "name": "История: XX век"
+  },
+  "summary": {
+   "attempts": 13,
+   "avg": 63,
+   "median": 75,
+   "min": 25,
+   "max": 100,
+   "avgMin": 4.3,
+   "passed": 7
+  },
+  "dist": [
+   {
+    "bucket": 2,
+    "n": 1
+   },
+   {
+    "bucket": 3,
+    "n": 5
+   },
+   {
+    "bucket": 4,
+    "n": 6
+   },
+   {
+    "bucket": 5,
+    "n": 1
+   }
+  ],
+  "questions": [
+   {
+    "n": 1,
+    "text": "В каком году началась Вторая мировая война?",
+    "pct": 92,
+    "sec": 33,
+    "topWrong": {
+     "text": "1941",
+     "n": 1
+    }
+   },
+   {
+    "n": 2,
+    "text": "В каком году пала Берлинская стена?",
+    "pct": 69,
+    "sec": 51,
+    "topWrong": {
+     "text": "1991",
+     "n": 4
+    }
+   },
+   {
+    "n": 3,
+    "text": "Как называлась первая искусственная спутниковая программа СССР?",
+    "pct": 69,
+    "sec": 81,
+    "topWrong": {
+     "text": "«Союз»",
+     "n": 4
+    }
+   },
+   {
+    "n": 4,
+    "text": "В каком году человек впервые полетел в космос?",
+    "pct": 23,
+    "sec": 95,
+    "topWrong": {
+     "text": "1969",
+     "n": 9
+    }
+   }
+  ],
+  "students": [
+   {
+    "name": "Игорь Лебедев",
+    "grp": "Group A",
+    "pct": 100,
+    "correct": 4,
+    "total": 4,
+    "min": 4.7,
+    "date": "29.08"
+   },
+   {
+    "name": "Анна Ковалёва",
+    "grp": "Group A",
+    "pct": 75,
+    "correct": 3,
+    "total": 4,
+    "min": 4.3,
+    "date": "31.08"
+   },
+   {
+    "name": "Дмитрий Орлов",
+    "grp": "Group A",
+    "pct": 75,
+    "correct": 3,
+    "total": 4,
+    "min": 4.4,
+    "date": "25.08"
+   },
+   {
+    "name": "Елена Гусева",
+    "grp": "Group A",
+    "pct": 75,
+    "correct": 3,
+    "total": 4,
+    "min": 4.4,
+    "date": "02.09"
+   },
+   {
+    "name": "Ксения Морозова",
+    "grp": "Group A",
+    "pct": 75,
+    "correct": 3,
+    "total": 4,
+    "min": 4.7,
+    "date": "28.08"
+   },
+   {
+    "name": "Никита Фомин",
+    "grp": "Group A",
+    "pct": 75,
+    "correct": 3,
+    "total": 4,
+    "min": 4.2,
+    "date": "26.08"
+   },
+   {
+    "name": "Полина Зайцева",
+    "grp": "Group A",
+    "pct": 75,
+    "correct": 3,
+    "total": 4,
+    "min": 4.3,
+    "date": "01.09"
+   },
+   {
+    "name": "Артём Волков",
+    "grp": "Group A",
+    "pct": 50,
+    "correct": 2,
+    "total": 4,
+    "min": 4.2,
+    "date": "30.08"
+   },
+   {
+    "name": "Мария Соколова",
+    "grp": "Group A",
+    "pct": 50,
+    "correct": 2,
+    "total": 4,
+    "min": 4.2,
+    "date": "27.08"
+   },
+   {
+    "name": "Павел Титов",
+    "grp": "Group A",
+    "pct": 50,
+    "correct": 2,
+    "total": 4,
+    "min": 4.1,
+    "date": "31.08"
+   },
+   {
+    "name": "Роман Кузьмин",
+    "grp": "Group A",
+    "pct": 50,
+    "correct": 2,
+    "total": 4,
+    "min": 4.6,
+    "date": "27.08"
+   },
+   {
+    "name": "Софья Белова",
+    "grp": "Group A",
+    "pct": 50,
+    "correct": 2,
+    "total": 4,
+    "min": 4.4,
+    "date": "29.08"
+   },
+   {
+    "name": "Алиса Ершова",
+    "grp": "Group A",
+    "pct": 25,
+    "correct": 1,
+    "total": 4,
+    "min": 4.2,
+    "date": "25.08"
+   }
+  ],
+  "groups": [
+   {
+    "name": "Group A",
+    "students": 15,
+    "done": 13,
+    "avg": 63
+   },
+   {
+    "name": "Group B",
+    "students": 12,
+    "done": 0,
+    "avg": null
+   }
+  ]
+ },
+ "GET quizzes/2/student-results": [
+  {
+   "quizStatsId": 18,
+   "completedAt": "2026-09-02T08:42:07.863Z",
+   "student": {
+    "id": 12,
+    "displayName": "Елена Гусева",
+    "username": "student09"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 4,
+   "answeredQuestions": 4,
+   "correctAnswers": 3,
+   "passPercent": 60,
+   "wrongAnswers": 1,
+   "unanswered": 0,
+   "accuracy": 75,
+   "isPassed": true
+  },
+  {
+   "quizStatsId": 10,
+   "completedAt": "2026-09-01T09:42:07.863Z",
+   "student": {
+    "id": 8,
+    "displayName": "Полина Зайцева",
+    "username": "student05"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 4,
+   "answeredQuestions": 4,
+   "correctAnswers": 3,
+   "passPercent": 60,
+   "wrongAnswers": 1,
+   "unanswered": 0,
+   "accuracy": 75,
+   "isPassed": true
+  },
+  {
+   "quizStatsId": 2,
+   "completedAt": "2026-08-31T10:42:07.863Z",
+   "student": {
+    "id": 4,
+    "displayName": "Анна Ковалёва",
+    "username": "student01"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 4,
+   "answeredQuestions": 4,
+   "correctAnswers": 3,
+   "passPercent": 60,
+   "wrongAnswers": 1,
+   "unanswered": 0,
+   "accuracy": 75,
+   "isPassed": true
+  },
+  {
+   "quizStatsId": 20,
+   "completedAt": "2026-08-31T06:42:07.863Z",
+   "student": {
+    "id": 13,
+    "displayName": "Павел Титов",
+    "username": "student10"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 4,
+   "answeredQuestions": 4,
+   "correctAnswers": 2,
+   "passPercent": 60,
+   "wrongAnswers": 2,
+   "unanswered": 0,
+   "accuracy": 50,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 12,
+   "completedAt": "2026-08-30T07:42:07.863Z",
+   "student": {
+    "id": 9,
+    "displayName": "Артём Волков",
+    "username": "student06"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 4,
+   "answeredQuestions": 4,
+   "correctAnswers": 2,
+   "passPercent": 60,
+   "wrongAnswers": 2,
+   "unanswered": 0,
+   "accuracy": 50,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 22,
+   "completedAt": "2026-08-29T11:42:07.863Z",
+   "student": {
+    "id": 14,
+    "displayName": "Софья Белова",
+    "username": "student11"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 4,
+   "answeredQuestions": 4,
+   "correctAnswers": 2,
+   "passPercent": 60,
+   "wrongAnswers": 2,
+   "unanswered": 0,
+   "accuracy": 50,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 4,
+   "completedAt": "2026-08-29T08:42:07.863Z",
+   "student": {
+    "id": 5,
+    "displayName": "Игорь Лебедев",
+    "username": "student02"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 4,
+   "answeredQuestions": 4,
+   "correctAnswers": 4,
+   "passPercent": 60,
+   "wrongAnswers": 0,
+   "unanswered": 0,
+   "accuracy": 100,
+   "isPassed": true
+  },
+  {
+   "quizStatsId": 14,
+   "completedAt": "2026-08-28T12:42:07.863Z",
+   "student": {
+    "id": 10,
+    "displayName": "Ксения Морозова",
+    "username": "student07"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 4,
+   "answeredQuestions": 4,
+   "correctAnswers": 3,
+   "passPercent": 60,
+   "wrongAnswers": 1,
+   "unanswered": 0,
+   "accuracy": 75,
+   "isPassed": true
+  },
+  {
+   "quizStatsId": 24,
+   "completedAt": "2026-08-27T09:42:07.863Z",
+   "student": {
+    "id": 15,
+    "displayName": "Роман Кузьмин",
+    "username": "student12"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 4,
+   "answeredQuestions": 4,
+   "correctAnswers": 2,
+   "passPercent": 60,
+   "wrongAnswers": 2,
+   "unanswered": 0,
+   "accuracy": 50,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 6,
+   "completedAt": "2026-08-27T06:42:07.863Z",
+   "student": {
+    "id": 6,
+    "displayName": "Мария Соколова",
+    "username": "student03"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 4,
+   "answeredQuestions": 4,
+   "correctAnswers": 2,
+   "passPercent": 60,
+   "wrongAnswers": 2,
+   "unanswered": 0,
+   "accuracy": 50,
+   "isPassed": false
+  },
+  {
+   "quizStatsId": 16,
+   "completedAt": "2026-08-26T10:42:07.863Z",
+   "student": {
+    "id": 11,
+    "displayName": "Никита Фомин",
+    "username": "student08"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 4,
+   "answeredQuestions": 4,
+   "correctAnswers": 3,
+   "passPercent": 60,
+   "wrongAnswers": 1,
+   "unanswered": 0,
+   "accuracy": 75,
+   "isPassed": true
+  },
+  {
+   "quizStatsId": 8,
+   "completedAt": "2026-08-25T11:42:07.863Z",
+   "student": {
+    "id": 7,
+    "displayName": "Дмитрий Орлов",
+    "username": "student04"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 4,
+   "answeredQuestions": 4,
+   "correctAnswers": 3,
+   "passPercent": 60,
+   "wrongAnswers": 1,
+   "unanswered": 0,
+   "accuracy": 75,
+   "isPassed": true
+  },
+  {
+   "quizStatsId": 26,
+   "completedAt": "2026-08-25T07:42:07.863Z",
+   "student": {
+    "id": 16,
+    "displayName": "Алиса Ершова",
+    "username": "student13"
+   },
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   },
+   "totalQuestions": 4,
+   "answeredQuestions": 4,
+   "correctAnswers": 1,
+   "passPercent": 60,
+   "wrongAnswers": 3,
+   "unanswered": 0,
+   "accuracy": 25,
+   "isPassed": false
+  }
+ ],
+ "GET auth/getAssignedGroups": {
+  "groups": [
+   {
+    "id": 1,
+    "name": "Group A"
+   },
+   {
+    "id": 2,
+    "name": "Group B"
+   }
+  ]
+ },
+ "GET auth/groups/public": {
+  "groups": [
+   {
+    "id": 1,
+    "name": "Group A"
+   },
+   {
+    "id": 2,
+    "name": "Group B"
+   }
+  ]
+ },
+ "GET auth/profile::student": {
+  "id": 3,
+  "username": "student",
+  "displayName": "Тестовый ученик",
+  "role": "student",
+  "group": {
+   "id": 1,
+   "name": "Group A"
+  },
+  "user": {
+   "id": 3,
+   "username": "student",
+   "displayName": "Тестовый ученик",
+   "role": "student",
+   "group": {
+    "id": 1,
+    "name": "Group A"
+   }
+  }
+ },
+ "GET quizzes/cards?assigned=true::student": [
+  {
+   "id": "2",
+   "name": "История: XX век",
+   "description": "Проверка базовых знаний по истории XX века",
+   "image": null,
+   "questionCount": 4,
+   "isAssigned": true,
+   "hasAttempt": false,
+   "isPassed": false,
+   "attemptCount": 0
+  },
+  {
+   "id": "1",
+   "name": "Математика: базовый уровень",
+   "description": "Короткий тест на базовые арифметические действия",
+   "image": null,
+   "questionCount": 5,
+   "isAssigned": true,
+   "hasAttempt": false,
+   "isPassed": false,
+   "attemptCount": 0
+  }
+ ],
+ "GET quizzes/cards?passed=true::student": [],
+ "GET auth/getUserGroup::student": {
+  "group": {
+   "id": 1,
+   "name": "Group A"
+  }
+ },
+ "GET auth/profile::admin": {
+  "id": 1,
+  "username": "admin",
+  "displayName": "Администратор",
+  "role": "leadership",
+  "group": null,
+  "user": {
+   "id": 1,
+   "username": "admin",
+   "displayName": "Администратор",
+   "role": "leadership",
+   "group": null
+  }
+ },
+ "GET auth/admin/groups": {
+  "groups": [
+   {
+    "id": 1,
+    "name": "Group A",
+    "studentsCount": 15,
+    "teachersCount": 1
+   },
+   {
+    "id": 2,
+    "name": "Group B",
+    "studentsCount": 12,
+    "teachersCount": 1
+   }
+  ]
+ },
+ "GET auth/admin/teachers": {
+  "teachers": [
+   {
+    "id": 2,
+    "username": "teacher",
+    "displayName": "Тестовый преподаватель",
+    "createdAt": "2026-09-02T12:42:07.681Z",
+    "groups": [
+     {
+      "id": 1,
+      "name": "Group A"
+     },
+     {
+      "id": 2,
+      "name": "Group B"
+     }
+    ]
+   }
+  ]
+ }
+}

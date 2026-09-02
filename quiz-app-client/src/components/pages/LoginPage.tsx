@@ -4,6 +4,7 @@ import { useLogin } from "../../hooks/auth/useLogin";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { IS_DEMO } from "../../api/client";
 
 
 export const LoginPage = () => {
@@ -23,7 +24,11 @@ export const LoginPage = () => {
   return (
     <AuthorizationPage<LoginBody>
       title="Вход"
-      description="Войдите в систему, чтобы продолжить обучение или управление тестами."
+      description={
+        IS_DEMO
+          ? "Демо-режим: данные записаны с рабочего стенда, изменения не сохраняются. Логины teacher, student и admin — пароль уже подставлен."
+          : "Войдите в систему, чтобы продолжить обучение или управление тестами."
+      }
       fields = {[{
           name: "username",
           label: "Логин",
@@ -37,7 +42,7 @@ export const LoginPage = () => {
           type: "password"
         }
       ]}
-      initialFormState={{ username: "", password: "" }}
+      initialFormState={IS_DEMO ? { username: "teacher", password: "P@ssw0rd" } : { username: "", password: "" }}
       submitLabel="Войти"
       submitHandler={(body) => {login(body)}}
       isSubmitting={fetchState.isFetching}

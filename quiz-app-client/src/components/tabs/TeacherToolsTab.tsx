@@ -52,6 +52,7 @@ export const TeacherToolsTab: FC = () => {
                         <Button onClick={() => openDialog(<AssignQuizToGroupDialog quizId={quizCard.id} />)}>
                           Назначить группам
                         </Button>
+                        <Button onClick={() => navigate(`/analytics/${quizCard.id}`)}>Аналитика</Button>
                         <Button onClick={() => navigate(`/details/${quizCard.id}`)}>Открыть тест</Button>
                       </div>
                     </article>
